@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>America Beauty Bar - Salon</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body { height: 100%; }
+    #coupon-iframe-div{
+        display: contents;
+    }
+    #america-logo-div{
+        text-align: center;
+    }
+    #america-logo{
+        width: 200px;
+        height: 200px;
+    }
+
+    @media screen and (max-width: 480px) {
+        #america-logo{
+            width: 100px;
+            height: 100px;
+        }
+    }
+
+  </style>
+
+    <script>
+        /* javascript code here */
+    </script>
+
+    </head>
+    <body>
+        <div id="america-logo-div">
+            <img id="america-logo" src=".\img\america_bb_logo.png" alt="america beauty bar logo">
+        </div>
+        <div id="coupon-iframe-div"></div>
+
+    <script>
+    window.onload = function(){
+        API_BASE_URL = "https://script.google.com/a/~/macros/s/AKfycbx-ZPqMh7C3rPUCxAqBZElyG4dUJ0w4ZSwp9VjSy-nZ1b4oM-Olbcj4R-RpLKC3sMPyug/exec";
+        var loc = window.location.toString();
+        params = loc.split('?')[1];
+
+        const urlParams = new URLSearchParams(window.location.search);
+        var code_param = urlParams.get("code");
+        var view_param = urlParams.get("view");
+
+        var iframeDiv = document.getElementById("coupon-iframe-div");
+            // create iframe
+            var iframe = document.createElement("iframe");
+            // Add attributes
+            iframe.src = API_BASE_URL + "?code=" + code_param + ((view_param != null && view_param != "") ? "&view=" + view_param : "");
+            // Set size and hide iframe border
+            iframe.width = "100%";
+            iframe.height = "100%";
+            iframe.frameBorder ="0";
+            iframe.scrolling = "0";
+            iframe.style.border= "none";
+
+        iframeDiv.appendChild(iframe);
+    }
+    </script>
+    </body>
+</html>
