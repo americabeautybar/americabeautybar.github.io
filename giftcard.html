@@ -4,6 +4,10 @@
   <title>America Beauty Bar - Salon</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
   <style>
     html, body { height: 100%; }
     #coupon-iframe-div{
@@ -35,6 +39,13 @@
         <div id="america-logo-div">
             <img id="america-logo" src=".\img\america_bb_logo.png" alt="america beauty bar logo">
         </div>
+
+        <div class="d-flex justify-content-center">
+            <div id="spinner-container" class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
         <div id="coupon-iframe-div"></div>
 
     <script>
@@ -58,6 +69,11 @@
             iframe.frameBorder ="0";
             iframe.scrolling = "0";
             iframe.style.border= "none";
+            iframe.onload =function(){
+                var spinner = document.getElementById('spinner-container');
+                spinner.style.display='none';
+            };
+            
 
         iframeDiv.appendChild(iframe);
     }
