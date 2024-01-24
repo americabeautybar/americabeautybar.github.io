@@ -25,6 +25,9 @@
         height: 300px;
         border-radius: 15px;
     }
+    .error-span-txt{
+        color: red;
+    }
 
     @media screen and (max-width: 480px) {
         #america-logo{
@@ -65,16 +68,35 @@
         const urlParams = new URLSearchParams(window.location.search);
         var code_param = urlParams.get("code");
         
-
         var fidelityDiv = document.getElementById("fidelity-div");
 
-        let img = document.createElement('img');
-        img.className = 'fidelity-img'
-        img.src ='fidelity/' + code_param + '.png?' + (new Date()).getTime();
-        fidelityDiv.appendChild(img);
-       
+        if(code_param != null && code_param != "")
+        {
+            let img = document.createElement('img');
 
+            img.onload = function(){
+                fidelityDiv.appendChild(img);
+            }
 
+            img.onerror = function(){
+                write_message("Tarjeta no encontrada");
+            }
+
+            img.className = 'fidelity-img'
+            img.src ='fidelity/' + code_param + '.png?' + (new Date()).getTime();
+        }
+        else 
+        {
+            write_message("Tarjeta no encontrada");
+        }
+    }
+
+    function write_message(message){
+        var fidelityDiv = document.getElementById("fidelity-div");
+        let span_text = document.createElement('span');
+        span_text.className = 'error-span-txt';
+        span_text.innerText = message;
+        fidelityDiv.appendChild(span_text);
     }
     </script>
     </body>
