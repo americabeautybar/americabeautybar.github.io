@@ -68,7 +68,7 @@
 
         let img = document.createElement('img');
         img.className = 'fidelity-img'
-        img.src ='fidelity/' + code_param + '.png';
+        img.src ='fidelity/' + code_param + '.png?' + (new Date()).getTime();
         fidelityDiv.appendChild(img);
        
 
