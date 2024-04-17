@@ -8824,7 +8824,7 @@ textarea.form-control {
     border-radius:50px;
     text-align:center;
     font-size:30px;
-    box-shadow: 2px 2px 3px #999;
+    /*box-shadow: 2px 2px 3px #999;*/
     z-index:100;
   }
   
@@ -8834,3 +8834,28 @@ textarea.form-control {
     color: white;
     margin-top: 8px;
   }
+
+  /*
+   ABB Carousel Styles
+  */
+  .carousel-item img {
+    width: 500px;
+    height: 400px;
+    object-fit: contain;
+  }
+
+  .carousel-item{
+    background-color: #da8b96;
+  }
+
+  @media screen and (max-width:480px)  {
+    .carousel-item img {
+      width: 350px;
+      height: 300px;
+    }
+  }
+
+
+  /*
+   End ABB Carousel Styles
+  */

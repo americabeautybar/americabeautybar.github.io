@@ -60,7 +60,7 @@
 	        <ul class="navbar-nav ml-auto">
 	          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
 	          <li class="nav-item"><a href="services.html" class="nav-link">Servicios</a></li>
-	          <!--<li class="nav-item active"><a href="work.html" class="nav-link">Trabajos</a></li>-->
+	          <li class="nav-item active"><a href="work.html" class="nav-link">Portafolios</a></li>
 	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
 	          <li class="nav-item"><a href="contact.html" class="nav-link">Contacto</a></li>
 	        </ul>
@@ -77,8 +77,46 @@
 	</a>
   <!-- END float WA Button -->
 
-  <h1> No content </h1>
-		
+
+
+  <section class="ftco-section">
+	<div class="container">
+
+		<div class="row justify-content-center mb-5 pb-3">
+			<div class="col-md-7 heading-section ftco-animate text-center">
+				<h2 class="mb-4">Portafolios</h2>
+				<p>Explora nuestra colección de trabajos realizados por nuestro talentoso equipo de estilistas y artistas de la belleza. Nuestro portafolio ofrece una visión de las últimas tendencias y la habilidad artística que caracteriza a nuestro salón de belleza. Sumérgete en la inspiración y descubre cómo podemos ayudarte a realzar tu belleza única y expresar tu estilo personal.</p>
+			</div>
+		</div>
+
+		<div class="row justify-content-center mb-2 pb-2">
+			<div class="col-md-7 heading-section ftco-animate text-center">
+				<h2 class="mb-2" style="text-transform: capitalize;">Uñas y Pedicure</h2>
+				<p style="margin-bottom: 0.5rem;">Uñas impecables y llenas de estilo en cada ocasión.</p>
+			</div>
+		</div>
+
+		<div class="row justify-content-center mb-5 pb-3">
+			<div class="col-md-6 d-flex ftco-animate" style="width: auto;">
+				<div id="carouselExampleIndicators"></div>
+			</div>	
+		</div>
+
+		<div class="row justify-content-center mb-2 pb-2">
+			<div class="col-md-7 heading-section ftco-animate text-center">
+				<h2 class="mb-2" style="text-transform: capitalize;">Pestañas</h2>
+				<p style="margin-bottom: 0.5rem;">Transforma tu mirada en un abrir y cerrar de ojos.</p>
+			</div>
+		</div>
+
+		<div class="row justify-content-center mb-5 pb-3">
+			<div class="col-md-6 d-flex ftco-animate" style="width: auto;">
+				<div id="carouselLashes"></div>
+			</div>	
+		</div>
+	</div>
+  </section>
+
 	<!-- footer -->
   <footer class="ftco-footer ftco-section img">
     <div class="overlay"></div>
@@ -146,6 +184,15 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <script src="js/jquery.timepicker.min.js"></script>
   <script src="js/scrollax.min.js"></script>
   <script src="js/main.js"></script>
-    
+  <script src="js/portfolio-data.js"></script>
+  <script src="js/abb_carousel.js"></script>
+  <script>
+	$(document).ready(function() {
+		abbC$('carouselExampleIndicators',portfolio_data.nails);
+
+		abbC$('carouselLashes',portfolio_data.lashes);
+	});
+  </script>
+  
   </body>
 </html>
