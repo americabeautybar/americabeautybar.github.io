@@ -149,6 +149,21 @@ html, body { height: 100%; }
     min-height: 400px;
 }
 
+.fc-check-discount{
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.carousel-control-next-icon {
+    border-radius: 50%;
+    background-color: #808080;
+}
+
+.carousel-control-prev-icon{
+    border-radius: 50%;
+    background-color: #808080;
+}
+
 
 @media screen and (max-width: 768px) {
     #america-logo{

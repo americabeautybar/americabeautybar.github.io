@@ -45,7 +45,7 @@
     <link rel="stylesheet" href="css/flaticon.css">
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/fidelity.css">
+    <link rel="stylesheet" href="css/fidelity.css?v1.0">
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -144,7 +144,7 @@
 	</a>
 	<!-- END float WA Button -->
 
-  <section class="ftco-section">
+  <section class="ftco-section" style="padding-bottom: 1em;">
     <div class="overlay"></div>
     <div class="container">
       <div class="row justify-content-center mb-5 pb-3">
@@ -184,8 +184,8 @@
               </div>
               <div class="fc-footer fc-text-mid">
                   <div class="fc-client-info">
-                      <div class="fc-client-name t-barlow">
-                          Nombre: <span id="fc-client-name"></span>
+                      <div class="fc-client-name t-barlow" style="color: #FFF;">
+                          Nombre: <span id="fc-client-name" style="color: #FFF;"></span>
                       </div>
                       <div class="fc-abb-face t-barlow">
                         <span class="fc-abb-face-icon"></span> America Beauty Bar
@@ -212,7 +212,26 @@
       </div>
     </div>
     </section>
-		
+	
+    <section class="ftco-section" style="padding-top: 1em;">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 heading-section ftco-animate text-center">
+            <h2 class="mb-4">Promociones del Mes</h2>
+            <p>Este mes regálate un momento de relajación y belleza con nuestras promociones. Agenda tu cita hoy mismo y déjanos realzar tu belleza!!</p>
+          </div>
+        </div>
+
+        <div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-6 d-flex ftco-animate" style="width: auto;">
+            <div id="carouselPromos"></div>
+          </div>	
+        </div>
+
+      </div>
+    </section>  
+
 	<!-- footer -->
   <footer class="ftco-footer ftco-section img">
     <div class="overlay"></div>
@@ -281,11 +300,17 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <script src="js/scrollax.min.js"></script>
   <script src="js/main.js"></script>
   <script src="js/config.js"></script>
+  <script src="js/promos-data.js"></script>
+  <script src="js/abb_carousel.js"></script>
 
   
   <script>
     var API_BASE_URL = CONFIG.APP.FIDELITY_API_URL;
     $(document).ready(function() {
+
+        // carousel promos
+        abbC$('carouselPromos',promos_data.promos);
+        // end carousel
 
         //$('#ftco-loader-2').addClass('show');
 
@@ -326,6 +351,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                     const checkNode = document.createElement("div");
                     checkNode.className = "fc-check";
                     checkNode.innerHTML  = i;
+
+                    if (i==4){
+                      checkNode.innerHTML = "-10%";
+                      checkNode.className += " fc-check-discount";
+                    }
                     
                     if(i<=clientFidelityCount){
                         checkNode.className += " fc-check-heart";
