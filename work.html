@@ -86,12 +86,25 @@
         "paymentAccepted": "Cash, VISA, Mastercard, Money transfer, Deposit"
       }
     </script>
-    
+  <!-- Supabase -->
+	<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+	<script src="js/auth.js"></script>
+	<script src="js/abb-nav-bar.js"></script>    
+
   </head>
   <body>
     
     <div class="hero-wrap js-fullheight" style="background-image: url('images/bg_nails_3.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
+	  <!-- login nav bar -->
+	  <div class="login-user-top">
+		<div>
+			<ul id="login-menu">
+			</ul>
+		</div>
+	  </div>
+	  <!-- end login nav bar -->
+	 
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
           <div class="col-md-8 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
@@ -118,13 +131,11 @@
 	      </button>
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
-	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-	          <li class="nav-item"><a href="services.html" class="nav-link">Servicios</a></li>
-	          <li class="nav-item active"><a href="work.html" class="nav-link">Portafolios</a></li>
-	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-	          <li class="nav-item"><a href="contact.html" class="nav-link">Contacto</a></li>
+	        <ul id="menu-navbar" class="navbar-nav ml-auto">
 	        </ul>
+			<script>
+				buildNavBar("menu-navbar","Portafolios");
+			</script>
 	      </div>
 	    </div>
 	  </nav>

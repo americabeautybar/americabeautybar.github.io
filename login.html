@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Login - America Beauty Bar Salon</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="robots" content="noindex">
+    
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700" rel="stylesheet">
+	  <link href="https://fonts.googleapis.com/css2?family=Rouge+Script&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/ionicons.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+
+
+    <style>
+
+    .bsb-btn-xl {
+      --bs-btn-padding-y:0.625rem;
+      --bs-btn-padding-x:1.25rem;
+      --bs-btn-font-size:calc(1.26rem + 0.12vw);
+      --bs-btn-border-radius:var(--bs-border-radius-lg)
+    }
+    
+    @media(min-width:1200px){
+      .bsb-btn-xl{
+        --bs-btn-font-size:1.35rem
+      }
+    }
+    
+    .bsb-btn-2xl{
+      --bs-btn-padding-y:0.75rem;
+      --bs-btn-padding-x:1.5rem;
+      --bs-btn-font-size:calc(1.27rem + 0.24vw);
+      --bs-btn-border-radius:var(--bs-border-radius-lg)
+    }
+    @media(min-width:1200px){
+      .bsb-btn-2xl{
+        --bs-btn-font-size:1.45rem
+      }
+    }
+    .bsb-btn-3xl{
+      --bs-btn-padding-y:0.875rem;
+      --bs-btn-padding-x:1.75rem;
+      --bs-btn-font-size:calc(1.28rem + 0.36vw);
+      --bs-btn-border-radius:var(--bs-border-radius-lg)
+    }
+    @media(min-width:1200px){
+      .bsb-btn-3xl{
+        --bs-btn-font-size:1.55rem
+      }
+    }
+    .bsb-btn-4xl{
+      --bs-btn-padding-y:1rem;
+      --bs-btn-padding-x:2rem;
+      --bs-btn-font-size:calc(1.29rem + 0.48vw);
+      --bs-btn-border-radius:var(--bs-border-radius-lg)
+    }
+    @media(min-width:1200px){
+      .bsb-btn-4xl{
+        --bs-btn-font-size:1.65rem
+      }
+    }
+    .bsb-btn-5xl{
+      --bs-btn-padding-y:1.125rem;
+      --bs-btn-padding-x:2.25rem;
+      --bs-btn-font-size:calc(1.3rem + 0.6vw);
+      --bs-btn-border-radius:var(--bs-border-radius-lg)
+    }
+    @media(min-width:1200px){
+      .bsb-btn-5xl{
+        --bs-btn-font-size:1.75rem
+      }
+    }
+
+    </style>
+
+    <!-- Supabase -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/abb-nav-bar.js"></script>
+
+    <script>
+      //redirectToIndexIfTokenStillValid();
+    </script>
+  </head>
+  <body style="display: none;">
+
+    <!-- content -->
+  
+  <section class="p-3 p-md-4 p-xl-5">
+    <div class="container" style="display: flex; align-items: center; justify-content: center;">
+      <div class="card shadow-sm auth-form-width-small">
+
+        <div>
+
+            <div class="card-body p-3 p-md-4 p-xl-5">
+              <div class="row">
+                <div class="col-12" style="justify-content: center; display: flex;">
+                  <div class="mb-5">
+                    <h3>Log in</h3>
+                  </div>
+                </div>
+              </div>
+              <form id="login-form" name="login-form">
+                <div class="row gy-3 gy-md-4 overflow-hidden">
+                  <div class="col-12" style="padding-bottom: 10px;">
+                    <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
+                  </div>
+                  <div class="col-12" style="padding-bottom: 10px;">
+                    <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                    <input type="password" class="form-control" name="password" id="password" value="" required>
+                  </div>
+                  
+                  <div class="col-12" style="padding-top: 10px;">
+                    <div class="d-grid" style="display: flex; justify-content: center;">
+                      <div id="error" class="alert alert-danger" style="display: none; margin-top: 1rem; width: 100%;"></div>
+                    </div>
+                    <div class="d-grid" style="display: flex; justify-content: center;">
+                      <button class="btn bsb-btn-xl btn-primary" type="submit">Log in now</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <div class="row">
+                <div class="col-12">
+                  <hr class="mt-5 mb-4 border-secondary-subtle">
+                  <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row" style="justify-content: center; align-items: center;">
+                    <a href="password-forgot.html" class="link-secondary text-decoration-none">Forgot password</a>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+		
+	<!-- footer -->
+  <footer class="ftco-footer ftco-section img">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row mb-5 d-md-flex align-items-center">
+    <div class="col-md-2"></div>
+        <div class="col-md-4">
+          <div class="ftco-footer-widget mb-4">
+            <h2 class="ftco-heading-2">Nuestras Redes</h2>
+            <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-2 abb-social-net">
+              <li class="ftco-animate"><a href="https://www.facebook.com/Americabeautybar"><span class="icon-facebook"></span></a></li>
+      <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+              <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+            </ul>
+          </div>
+        </div>
+        
+        
+        <div class="col-md-4">
+          <div class="ftco-footer-widget mb-4">
+            
+            <div class="block-23 mb-3">
+              <ul>
+                <li><span class="icon icon-map-marker"></span><span class="text">C. Durango 949, Morelos II. Ciudad Juarez Chih/, Ciudad Juárez, Mexico</span></li>
+                <li><a href="#"><span class="icon icon-whatsapp"></span><span class="text">+52 656 250 0321</span></a></li>
+                <!--<li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>-->
+              </ul>
+            </div>
+          </div>
+        </div>
+    <div class="col-md-2"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-center">
+
+    <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved</p>
+
+      <div style="display: none;">
+      <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+      </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/abb-utils.js"></script>
+  
+
+  
+  <script>
+
+    
+
+    $(document).ready(function() {
+
+      loadingCheckPage();
+
+      const loginForm = document.getElementById('login-form');
+
+      loginForm.addEventListener('submit', function(e){
+        e.preventDefault();
+
+        utils.hideError();
+
+        const userEmail = this.elements['email'].value;
+        const pass = this.elements['password'].value;
+
+        loginUser(userEmail, pass);
+      });
+      
+    });
+
+    async function loadingCheckPage(){
+      is_redirect = await auth.redirectToIndexIfTokenStillValid();
+      if(!is_redirect){
+        document.querySelector("body").style.display = "block";
+      }
+    }
+
+    
+    async function loginUser(email, password){
+
+      const {login, redirect_to, error } = await auth.loginUser(email, password);
+
+      if(login){
+        if(redirect_to){
+          window.location.href = redirect_to;
+        } else {
+          window.location.href = "./index.html";
+        }
+      }
+
+      if(error){
+        utils.showError(error)
+      }
+    }
+
+</script>
+    
+  </body>
+</html>

@@ -1,23 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Fidelity Card - America Beauty Bar Salon</title>
+    <title>Fidelity Card Check-In - America Beauty Bar Salon</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <meta name="robots" content="noindex">
 
-    <meta property="og:title" content="Fidelity Card - America Beauty Bar Salon" />
-    <meta property="og:description" content="¡Gracias por ser parte de nuestra familia de belleza!." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://americabeautybar.com/fidelity.html" />
-    <meta property="og:image" content="https://americabeautybar.com/images/og/og-main-img.jpg" />
-  
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:url" contnet="https://americabeautybar.com/fidelity.html">
-    <meta name="twitter:title" content="Fidelity Card - America Beauty Bar Salon">
-    <meta name="twitter:description" content="¡Gracias por ser parte de nuestra familia de belleza!.">
-  
+    <meta name="robots" content="noindex">
     
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700" rel="stylesheet">
 	  <link href="https://fonts.googleapis.com/css2?family=Rouge+Script&display=swap" rel="stylesheet">
@@ -45,63 +33,17 @@
     <link rel="stylesheet" href="css/flaticon.css">
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/fidelity.css?v1.0">
+    <link rel="stylesheet" href="css/fidelity.css">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+     <!-- Supabase -->
+     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+     <script src="js/auth.js"></script>
+     <script src="js/abb-nav-bar.js"></script>
 
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "America Beauty Bar",
-        "email": "americabeautybar@gmail.com",
-        "telephone": "656-250-0321",
-        "url": "https://americabeautybar.com",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "C. Durango 949, Morelos II",
-          "addressLocality": "Ciudad Juarez",
-          "addressRegion": "CHIH",
-          "postalCode": "",
-          "addressCountry": "MX"
-        },
-        "logo": "https://americabeautybar.com/android-chrome-512x512.png",
-        "image": [
-          {
-            "@type": "ImageObject",
-            "url": "https://americabeautybar.com/images/site/img_16_9.jpeg",
-            "width": 1200,
-            "height": 675
-          },
-          {
-            "@type": "ImageObject",
-            "url": "https://americabeautybar.com/images/site/img_4_3.jpeg",
-            "width": 1200,
-            "height": 900
-          },
-          {
-            "@type": "ImageObject",
-            "url": "https://americabeautybar.com/images/site/img_1_1.jpeg",
-            "width": 1200,
-            "height": 1200
-          }
-        ],
-        "openingHours": "[\"Tue 10:00-18:00\",\"Wed 10:00-18:00\",\"Thu 10:00-18:00\",\"Fri 10:00-18:00\",\"Sat 10:00-18:00\"]",
-        "paymentAccepted": "Cash, VISA, Mastercard, Money transfer, Deposit"
-      }
-    </script>
-    <!-- Supabase -->
-	  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-	  <script src="js/auth.js"></script>
-	  <script src="js/abb-nav-bar.js"></script>
-    
   </head>
   <body>
     
-    <div class="hero-wrap header-fc" style="background-image: url('images/bg_nails_3.jpg'); /* background-position: 50% -274px;*/ background-position: center center;">
+    <div class="hero-wrap header-fc" style="background-image: url('images/bg_nails_3.jpg'); /*background-position: 50% -274px;*/ background-position: center center;">
       <div class="overlay"></div>
       <!-- login nav bar -->
       <div class="login-user-top">
@@ -111,6 +53,7 @@
         </div>
       </div>
       <!-- end login nav bar -->
+
       <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center header-fc">
           <div class="col-md-8 ftco-animate text-center">
@@ -158,10 +101,10 @@
   <section class="ftco-section">
     <div class="overlay"></div>
     <div class="container">
-      <div class="row justify-content-center mb-5 pb-3">
+      <div class="row justify-content-center mb-2 pb-3">
         <div class="col-md-7 heading-section ftco-animate text-center">
-          <h2 class="mb-4">Tarjeta de Fidelidad</h2>
-          <p>¡Gracias por ser parte de nuestra familia de belleza! Para agradecer tu lealtad, hemos creado una exclusiva tarjeta de fidelidad. Con cada visita, acumularás puntos que te acercarán a increíbles recompensas. ¡En tu sexta visita, disfruta de descuentos especiales o servicios gratuitos como muestra de nuestro aprecio por tu preferencia!.</p>
+          <h2 class="mb-4">Registro Visita Tarjeta de Fidelidad</h2>
+          <p>Haz click on el boton <i>Check-In Fidelity Card</i> y espera a que se procese la solicitud para registrar una visita en la tarjeta de fidelidad del cliente.</p>
           
           <div class="mt-5">
             <div class="d-flex justify-content-center">
@@ -171,75 +114,87 @@
                 </div>
                 <div>
                   Procesando...
+                </div>
               </div>
             </div>
           </div>
-        </div>
+
         </div>
       </div>
-      <div class="row justify-content-center mb-2 pb-3">
-        <div class="col-md-7 d-flex mb-sm-4 ftco-animate">
 
-          <div class="fc-card fc-hidden-card" id="fc-card">
-            <div class="fc-abb-logo"></div>
-              <div class="fc-main-title">
-                  <div class="fc-text-main t-bask fc-text-color-1">Fidelity Card</div>
-                  <div class="fc-text-sub t-barlow">America Beauty Bar</div>
-                  <div class="fc-text-sub t-barlow">Gracias por elegirnos</div>
-              </div>
-              <div class="fc-checks fc-text-color-1" id="fc-checks">
-              </div>
-              <div class="fc-footer fc-text-mid">
-                  <div class="fc-client-info">
+        <!-- fidelity card start -->
+        <div class="row justify-content-center mb-2 pb-3">
+          <div class="col-md-7 d-flex mb-sm-4 ftco-animate">
+            <div class="fc-card fc-hidden-card" id="fc-card">
+              <div class="fc-abb-logo"></div>
+                <div class="fc-main-title">
+                    <div class="fc-text-main t-bask fc-text-color-1">Fidelity Card</div>
+                    <div class="fc-text-sub t-barlow">America Beauty Bar</div>
+                    <div class="fc-text-sub t-barlow">Gracias por elegirnos</div>
+                </div>
+                <div class="fc-checks fc-text-color-1" id="fc-checks">
+                </div>
+                <div class="fc-footer fc-text-mid">
+                    <div class="fc-client-info">
                       <div class="fc-client-name t-barlow" style="color: #FFF;">
                           Nombre: <span id="fc-client-name" style="color: #FFF;"></span>
-                      </div>
-                      <div class="fc-abb-face t-barlow">
-                        <span class="fc-abb-face-icon"></span> America Beauty Bar
-                      </div>
-                  </div>
-                  <div class="fc-gift-desc t-bask fc-text-color-2">
-                      Gelish Gratis en tu 6ta Visita!!!
-                  </div>
-                  <div class="fc-card-id t-barlow">
-                      <span id="fc-card-id"></span>
-                  </div>
+                        </div>
+                        <div class="fc-abb-face t-barlow">
+                          <span class="fc-abb-face-icon"></span> America Beauty Bar
+                        </div>
+                    </div>
+                    <div class="fc-gift-desc t-bask fc-text-color-2">
+                        Gelish Gratis en tu 6ta Visita!!!
+                    </div>
+                    <div class="fc-card-id t-barlow">
+                        <span id="fc-card-id"></span>
+                    </div>
+                </div>
               </div>
-            </div>
-        </div>
-        <div class="col-md-7 heading-section ftco-animate text-center fc-notification">
-          <div id="error" class="alert alert-danger" style="display: none;"></div>
-          <div id="success" class="alert alert-success" style="display: none;"></div>
-        </div>
-      </div>
+          </div>
 
-      <div class="row justify-content-center mb-5 pb-3">
-        <div class="col-md-7 heading-section ftco-animate text-center" style="display: flex; justify-content: center;">
-          <div id="qrcode"></div>
+          <div class="col-md-7 heading-section ftco-animate text-center fc-notification">
+            <div id="error" class="alert alert-danger" style="display: none;"></div>
+            <div id="success" class="alert alert-success" style="display: none;"></div>
+          </div>
+
         </div>
-      </div>
-    </div>
-  </section>
-	
-    <section class="ftco-section" style="padding-top: 1em;">
-      <div class="overlay"></div>
-      <div class="container">
+
+        <!-- fidelity card end -->
+
         <div class="row justify-content-center mb-5 pb-3">
-          <div class="col-md-7 heading-section ftco-animate text-center">
-            <h2 class="mb-4">Promociones del Mes</h2>
-            <p>Este mes regálate un momento de relajación y belleza con nuestras promociones. Agenda tu cita hoy mismo y déjanos realzar tu belleza!!</p>
+          <div class="col-md-7 heading-section ftco-animate text-center mb-5">
+            <button type="button" class="btn btn-primary btn-lg" id="fc-checkin-btn">Check-In Fidelity Card</button>
+          </div>
+          <div class="col-md-7 heading-section ftco-animate text-center fc-notification">
+            <div id="fc-checkin-error" class="alert alert-danger" style="display: none;"></div>
+            <div id="fc-checkin-success" class="alert alert-success" style="display: none;"></div>
           </div>
         </div>
 
-        <div class="row justify-content-center mb-5 pb-3">
-          <div class="col-md-6 d-flex ftco-animate" style="width: auto;">
-            <div id="carouselPromos"></div>
-          </div>	
+        <!-- Modal -->
+        <div class="modal fade" id="fc-notification-modal" tabindex="-1" role="dialog" aria-labelledby="fc-notification-modal" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header" style="border-bottom: none;">
+                <h5 class="modal-title" style="color:black;">Check-In Card</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="fc-notification-modal-body" style="color:black;">
+              </div>
+              <div class="modal-footer" style="border-top:none;">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
         </div>
+        <!-- Modal End -->
 
       </div>
-    </section>  
-
+    </section>
+		
 	<!-- footer -->
   <footer class="ftco-footer ftco-section img">
     <div class="overlay"></div>
@@ -307,28 +262,24 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <script src="js/jquery.timepicker.min.js"></script>
   <script src="js/scrollax.min.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/auth-page.js"></script>
   <script src="js/config.js"></script>
-  <script src="js/promos-data.js"></script>
-  <script src="js/abb_carousel.js"></script>
   <script src="js/abb-utils.js"></script>
   <script src="js/abb-fidelity-card.js"></script>
-  <script src="js/qrcode.js"></script>
 
   
   <script>
-
+    
     var fcApp = new FidelityCard(CONFIG);
 
     $(document).ready(function() {
 
-        // carousel promos
-        abbC$('carouselPromos',promos_data.promos);
-        // end carousel
-
-        //$('#ftco-loader-2').addClass('show');
+        /* Fidelity Card logic*/
 
         utils.hideError('error');
         utils.hideSuccess('success');
+
+        $("#fc-checkin-btn").prop('disabled', true);
 
         var loc = window.location.toString();
         params = loc.split('?')[1];
@@ -344,12 +295,23 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
         loadFidelityCard(card_id_param);
 
+        
+        $("#fc-checkin-btn").click(function(e){
+
+          if (card_id_param == null || card_id_param == ""){
+            utils.showError('code parameter can not be null','fc-checkin-error');
+            return;
+          }
+
+          checkInFidelityCard(card_id_param);
+        });
+
     });
 
     async function loadFidelityCard(card_id){
-                
-      const [hasError, resultMessage] = await fcApp.renderCard(card_id);
 
+      const [hasError, resultMessage] = await fcApp.renderCard(card_id);
+      
       if(hasError){
         utils.showError(resultMessage,'error');
       } else {
@@ -358,22 +320,58 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         }
       }
 
-      var qrcode = new QRCode(document.getElementById("qrcode"), {
-          text: `${CONFIG.APP.BASE_URL}fidelity-checkin.html?code=${card_id}`,
-          width: 128,
-          height: 128,
-          colorDark : "#000000",
-          colorLight : "#ffffff",
-          correctLevel : QRCode.CorrectLevel.H
-      });
+      if(!fcApp.has_max_count){
+        $("#fc-checkin-btn").prop('disabled', false);
+      }
 
-        hideSpinner();
+      hideSpinner();
+    }
+
+    async function checkInFidelityCard(card_id){
+
+      // hide card and any card error/success
+      fcApp.hideCard();
+      utils.hideError('error');
+      utils.hideSuccess('success');
+
+      displaySpinner();
+
+      $("#fc-checkin-btn").prop('disabled', true);
+
+      let res = await fcApp.checkInFidelityCard(card_id);
+
+      if(res.error){
+        setModalText(res.error)
+      } else {
+        setModalText(res.result)
+      }
+
+      // reload the card
+      await loadFidelityCard(card_id);
+
+      // show modal
+      $("#fc-notification-modal").modal('show');
+
+      hideSpinner();
+
+      if(!fcApp.has_max_count){
+        $("#fc-checkin-btn").prop('disabled', false);
+      }
     }
 
     function hideSpinner(){
         var spinner = document.getElementById('spinner-container');
         spinner.style.display='none';
         //$('#ftco-loader-2').removeClass('show');
+    }
+
+    function displaySpinner(){
+        var spinner = document.getElementById('spinner-container');
+        spinner.style.display='block';
+    }
+
+    function setModalText(txtMsg){
+      $("#fc-notification-modal-body").text(txtMsg)
     }
 
   </script>

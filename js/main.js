@@ -284,7 +284,7 @@
 
 	$('#appointment_time').timepicker();
 
-
+	loadLoginNav();
 
 
 })(jQuery);
