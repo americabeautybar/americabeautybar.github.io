@@ -286,6 +286,5 @@
 
 	loadLoginNav();
 
-
 })(jQuery);
 

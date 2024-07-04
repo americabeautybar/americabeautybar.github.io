@@ -115,4 +115,44 @@ class FidelityCard {
             return {error: `unhandled error: ${error.message}`}
         }
     }
+
+    /*
+        Execute Edge Function to create Fidelity Card
+    */
+        async createFidelityCard(clientName, clientPhone){
+            const loginstorage = new LoginStorage();
+     
+            const createFidelityCardEndPoint = `${this.FIDELITY_CARD_EDGE_URL}/create-fidelity-card`
+     
+            const req_data = {
+                client_name: clientName,
+                client_phone_number: clientPhone,
+                fidelity_count: "1",
+                access_token: loginstorage.getStoreAccessToken()
+             }
+     
+             try{ 
+                 const response = await fetch(createFidelityCardEndPoint, {
+                     method: "POST",
+                     headers: {
+                       'Accept': 'application/json',
+                       'Content-Type': 'application/json',
+                       'Authorization': `Bearer ${this.SUPA_ANON_KEY}`
+                     },
+                     body: JSON.stringify(req_data)
+                 });
+     
+                 if(response.status == 401){
+                     console.log('invalid token');
+                     const is_redirect = await auth.redirecToLoginIfTokenIsNotValid();
+                 }
+             
+                 const response_data = await response.json();
+         
+                 return response_data;
+     
+             } catch (error){
+                 return {error: `unhandled error: ${error.message}`}
+             }
+         }
 }

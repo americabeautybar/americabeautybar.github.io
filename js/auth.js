@@ -129,15 +129,24 @@ class Auth {
        or not valid. Used for any private page 
     */
     async redirecToLoginIfTokenIsNotValid(){
-        // TODO: maybe change the name to CheckPagePermission
+
+        //console.log(">>>>> redirecToLoginIfTokenIsNotValid")
 
         let accessToken = this.#loginstorage.getStoreAccessToken()
+
+        //console.log("access token 1 : ", accessToken)
     
         const tokenValid = await this.validateAccessToken(accessToken);
+
+        //console.log("access token valid: ", tokenValid);
     
         if(!tokenValid){
+            //console.log("redirecting user to login")
             const to_redirect = this.#getRedirectToUrl();
             this.#loginstorage.setStoreRedirectTo(to_redirect);
+            // logout user FIXME
+            //let logoutRes = await this.userLogout();
+
             window.location.href = "./login.html";
             return true;
         }
@@ -178,6 +187,13 @@ class Auth {
 
             const redirect_to = this.#loginstorage.getStoreRedirectTo();
 
+            if(redirect_to){
+                // remove redirect_to after get/return it
+                // so subsequent login will not redirect the user to the same page
+                // if the user didnt request a private page.
+                this.#loginstorage.removeItemFromStore("redirect_to");
+            }
+
             return {
                 login: true,
                 redirect_to: redirect_to,
@@ -193,7 +209,8 @@ class Auth {
     }
 
     /*
-        logout the user from supabase and remove local storage items
+        logout the user from supabase and remove local storage items, then redirect user to index page.
+        used for logout button.
     */
     async logout(){
         this.#loginstorage.removeItemFromStore("stoken");
@@ -201,6 +218,18 @@ class Auth {
         this.#loginstorage.removeItemFromStore("user_email");
         const { error } = await this.#supabase.auth.signOut();
         window.location.href = "./index.html";
+    }
+
+    /*
+        logout the user from supabase and remove local storage items
+    */
+    async userLogout(){
+        //console.log("login out user...")
+        this.#loginstorage.removeItemFromStore("stoken");
+        this.#loginstorage.removeItemFromStore("user_name");
+        this.#loginstorage.removeItemFromStore("user_email");
+        const { error } = await this.#supabase.auth.signOut();
+        return true;
     }
 
     /*

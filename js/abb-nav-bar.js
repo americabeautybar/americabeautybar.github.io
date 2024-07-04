@@ -47,6 +47,12 @@ var nav_bar_data = [
             protected: false
         },
         {
+            name: 'Crear Tarjeta',
+            url: 'fidelity-create.html',
+            show: true,
+            protected: true
+        },
+        {
             name: 'Fidelity',
             url: null,
             show: false,

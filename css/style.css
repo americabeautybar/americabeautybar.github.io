@@ -8972,3 +8972,23 @@ textarea.form-control {
   border-color: #dee2e6;
   opacity: 0.6;
 }
+
+/* Fidelity Check-In*/
+
+.fc-checkin-container{
+  display: flex; 
+  justify-content: center; 
+  position: relative; 
+  flex-direction: column; 
+  align-items: center;
+  min-height: 380px;
+
+}
+
+@media screen and (max-width: 768px) {
+  .fc-checkin-container{
+    min-height: 200px;    
+  }
+}
+
+/* End Fidelity Check-In*/

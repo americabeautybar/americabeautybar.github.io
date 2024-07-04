@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Fidelity Card Check-In - America Beauty Bar Salon</title>
+    <title>Fidelity Card Create - America Beauty Bar Salon</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -43,11 +43,12 @@
         height: 100%;
         z-index: 1;
         display: flex;
+        background-color: black;
+        opacity: 0.2;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        color: black;
-        display: flex;
+        color: white
       }
 
     </style>
@@ -100,7 +101,7 @@
 	        <ul id="menu-navbar" class="navbar-nav ml-auto">
 	        </ul>
           <script>
-            buildNavBar("menu-navbar","Fidelity");
+            buildNavBar("menu-navbar","Crear Tarjeta");
           </script>
 	      </div>
 	    </div>
@@ -120,80 +121,62 @@
     <div class="container">
       <div class="row justify-content-center mb-2 pb-3">
         <div class="col-md-7 heading-section ftco-animate text-center">
-          <h2 class="mb-4">Registro Visita Tarjeta de Fidelidad</h2>
-          <p>Haga click on el boton <i>Check-In Fidelity Card</i> y espere a que se procese la solicitud para registrar una visita en la tarjeta de fidelidad del cliente.</p>
-          
+          <h2 class="mb-4">Creacion Tarjeta de Fidelidad</h2>
+          <p>Llene el formulario, haga click on el boton <i>Crear Tarjeta</i> y espere a que se procese la solicitud para la creacion de la tarjeta de fidelidad. Durante el transcurso del dia el cliente recibira la tarjeta por Whatsapp.</p>
         </div>
       </div>
 
-        <!-- fidelity card start -->
-        <div class="row justify-content-center mb-2 pb-3">
-          <div class="col-md-7 heading-section ftco-animate text-center fc-checkin-container" >
 
-            <div id="spinner-container">
-              <div class="spinner-border" role="status">
-                <span class="sr-only">.</span>
+      <div class="row justify-content-center mb-2 pb-3">
+        <div class="col-md-7 heading-section ftco-animate text-center" style="display: flex; justify-content: center; position: relative;">
+          
+          <div id="spinner-container">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">.</span>
+            </div>
+            <div>
+              Procesando...
+            </div>
+          </div>
+          
+          <form id="fidelity-create-form" name="fidelity-create-form" style="width: 500px; padding: 20px 0;">
+            <div class="row gy-3 gy-md-4 overflow-hidden" style="text-align: left;">
+              <div class="col-12" style="padding-bottom: 10px;">
+                <label for="firstname" class="form-label">Nombre <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Ingresar Nombre" required>
               </div>
-              <div>
-                Procesando...
+              <div class="col-12" style="padding-bottom: 10px;">
+                <label for="lastname" class="form-label">Apellido <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Ingresar Apellido" required>
+              </div>
+              <div class="col-12" style="padding-bottom: 10px;">
+                <label for="phoneNumber" class="form-label">Telefono <span class="text-danger">*</span></label>
+                <small>(sin espacios, sin guiones)</small><br>
+                <input type="tel" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="6561111111" pattern="[0-9]{10}" required>
+              </div>
+              <div class="col-12" style="padding-top: 10px;">
+                <div class="d-grid" style="display: flex; justify-content: center;">
+                  <button class="btn bsb-btn-xl btn-primary" type="submit" id="fc-create-btn">Crear Tarjeta</button>
+                </div>
+                <div class="d-grid" style="display: flex; justify-content: center;">
+                  <div id="error" class="alert alert-danger" style="display: none; margin-top: 1rem;"></div>
+                  <div id="success" class="alert alert-success" style="display: none; margin-top: 1rem;"></div>
+                </div>
               </div>
             </div>
-
-            
-            <div class="fc-card fc-hidden-card" id="fc-card">
-                <div class="fc-abb-logo"></div>
-                <div class="fc-main-title">
-                    <div class="fc-text-main t-bask fc-text-color-1">Fidelity Card</div>
-                    <div class="fc-text-sub t-barlow">America Beauty Bar</div>
-                    <div class="fc-text-sub t-barlow">Gracias por elegirnos</div>
-                </div>
-                <div class="fc-checks fc-text-color-1" id="fc-checks">
-                </div>
-                
-                <div class="fc-footer fc-text-mid">
-                    <div class="fc-client-info">
-                      <div class="fc-client-name t-barlow" style="color: #FFF;">
-                          Nombre: <span id="fc-client-name" style="color: #FFF;"></span>
-                        </div>
-                        <div class="fc-abb-face t-barlow">
-                          <span class="fc-abb-face-icon"></span> America Beauty Bar
-                        </div>
-                    </div>
-                    <div class="fc-gift-desc t-bask fc-text-color-2">
-                        Gelish Gratis en tu 6ta Visita!!!
-                    </div>
-                    <div class="fc-card-id t-barlow">
-                        <span id="fc-card-id"></span>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="fc-notification" style="width: 100%;">
-              <div id="error" class="alert alert-danger" style="display: none;"></div>
-              <div id="success" class="alert alert-success" style="display: none;"></div>
-            </div>
-          </div>
+          </form>
         </div>
+      </div>
 
-        <!-- fidelity card end -->
 
-        <div class="row justify-content-center mb-5 pb-3">
-          <div class="col-md-7 heading-section ftco-animate text-center mb-5">
-            <button type="button" class="btn btn-primary btn-lg" id="fc-checkin-btn">Check-In Fidelity Card</button>
-          </div>
-          <div class="col-md-7 heading-section ftco-animate text-center fc-notification">
-            <div id="fc-checkin-error" class="alert alert-danger" style="display: none;"></div>
-            <div id="fc-checkin-success" class="alert alert-success" style="display: none;"></div>
-          </div>
-        </div>
+      
 
         <!-- Modal -->
         <div class="modal fade" id="fc-notification-modal" tabindex="-1" role="dialog" aria-labelledby="fc-notification-modal" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header" style="border-bottom: none;">
-                <h5 class="modal-title" style="color:black;">Check-In Card</h5>
+                <h5 class="modal-title" style="color:black;">Create Card</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -294,89 +277,75 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
     $(document).ready(function() {
 
-        /* Fidelity Card logic*/
+        hideSpinner();
 
-        utils.hideError('error');
-        utils.hideSuccess('success');
+        const fidelityCrateForm = document.getElementById('fidelity-create-form');
 
-        $("#fc-checkin-btn").prop('disabled', true);
+        fidelityCrateForm.addEventListener('submit', function(e){
+          e.preventDefault();
 
-        var loc = window.location.toString();
-        params = loc.split('?')[1];
+          utils.hideError('error');
+          utils.hideSuccess('success');
 
-        const urlParams = new URLSearchParams(window.location.search);
-        var card_id_param = urlParams.get("code");
+          //TODO: block  entire form and display the spinner
+          displaySpinner();
 
-        if (card_id_param == null || card_id_param == ""){
-            utils.showError('code parameter can not be null','error')
-            hideSpinner()
+          $("#fc-create-btn").prop('disabled', true);
+
+          let userFirstName = this.elements['firstname'].value;
+          let userLastName = this.elements['lastname'].value;
+          let userPhone = this.elements['phoneNumber'].value;
+
+          //TODO: validation
+
+          userFirstName = userFirstName.trim();
+          userLastName = userLastName.trim();
+          userPhone = userPhone.trim();
+
+          if(userFirstName === ""){
+            utils.showError('Nombre no puede estar vacio');
+            hideSpinner();
             return;
-        }
-
-        loadFidelityCard(card_id_param);
-
-        
-        $("#fc-checkin-btn").click(function(e){
-
-          if (card_id_param == null || card_id_param == ""){
-            utils.showError('code parameter can not be null','fc-checkin-error');
+          }
+          
+          if(userLastName === ""){
+            utils.showError('Apellido no puede estar vacio');
+            hideSpinner();
             return;
           }
 
-          checkInFidelityCard(card_id_param);
-        });
+          if(userPhone === ""){
+            utils.showError('Telefono no puede estar vacio');
+            hideSpinner();
+            return;
+          }
 
+          createFidelityCard(userFirstName, userLastName, userPhone);
+        });
+        
     });
 
-    async function loadFidelityCard(card_id){
+    async function createFidelityCard(userFirstName, userLastName, userPhone){
 
-      const [hasError, resultMessage] = await fcApp.renderCard(card_id);
+      var clientName = `${userFirstName} ${userLastName}`
       
-      if(hasError){
-        utils.showError(resultMessage,'error');
-      } else {
-        if(resultMessage != ""){
-          utils.showSuccess(resultMessage, 'success');
-        }
-      }
-
-      if(!fcApp.has_max_count){
-        $("#fc-checkin-btn").prop('disabled', false);
-      }
-
-      hideSpinner();
-    }
-
-    async function checkInFidelityCard(card_id){
-
-      // hide card and any card error/success
-      fcApp.hideCard();
-      utils.hideError('error');
-      utils.hideSuccess('success');
-
-      displaySpinner();
-
-      $("#fc-checkin-btn").prop('disabled', true);
-
-      let res = await fcApp.checkInFidelityCard(card_id);
+      let res = await fcApp.createFidelityCard(clientName, userPhone);
 
       if(res.error){
-        utils.setModalErrorText(res.error)
+        utils.setModalErrorText(`Error: ${res.error}`)
       } else {
-        utils.setModalSuccessText(res.result)
+        // card id created
+        //let card_id_crated = res.info.card_id
+        utils.setModalSuccessText(`Tarjeta creada con exito. El cliente recibira en el transcurso del dia su tarjeta por Whatsapp.`);
+        cleanFormFields();
       }
-
-      // reload the card
-      await loadFidelityCard(card_id);
 
       // show modal
       utils.showModal();
 
-      hideSpinner();
+      $("#fc-create-btn").prop('disabled', false);
 
-      if(!fcApp.has_max_count){
-        $("#fc-checkin-btn").prop('disabled', false);
-      }
+      hideSpinner();
     }
 
     function hideSpinner(){
@@ -390,6 +359,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         spinner.style.display='flex';
     }
 
+    function cleanFormFields(){
+      const fidelityCrateForm = document.getElementById('fidelity-create-form');
+      fidelityCrateForm.elements['firstname'].value = "";
+      fidelityCrateForm.elements['lastname'].value = "";
+      fidelityCrateForm.elements['phoneNumber'].value = "";
+    }
 
   </script>
     

@@ -50,6 +50,20 @@ class Utils {
             el.hide();
         }
     }
+
+    setModalErrorText(txtMsg){
+        $("#fc-notification-modal-body").text(txtMsg);
+        $("#fc-notification-modal-icon").attr("src","images/cross-mark.png");
+    }
+
+    setModalSuccessText(txtMsg){
+        $("#fc-notification-modal-body").text(txtMsg);
+        $("#fc-notification-modal-icon").attr("src","images/check-mark.png");
+    }
+
+    showModal(){
+        $("#fc-notification-modal").modal('show');
+    }
 }
 
 var utils = new Utils();
