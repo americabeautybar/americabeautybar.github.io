@@ -3,7 +3,7 @@ class FidelityCard {
     constructor(config) {
         
         this.FIDELITY_CARD_API_URL = config.APP.FIDELITY_API_URL;
-        this.FIDELITY_CARD_EDGE_URL = config.APP.FIDELITY_EDGE_URL;
+        this.FIDELITY_CARD_EDGE_URL = config.APP.EDGE_API_URL;
         this.SUPA_ANON_KEY = config.APP.SUPABASE_ANON_KEY;
         this.MAX_FIDELITY_COUNT = 6;
         
