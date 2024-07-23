@@ -15,7 +15,6 @@ class AbbSurvey {
         this.survCopyDiv = document.getElementById('surv-copy-div');
 
         this.current_survey_code = null;
-
     }
 
     async renderSurveyLink(survey_code){
@@ -27,7 +26,6 @@ class AbbSurvey {
         this.survCopyDiv.innerHTML = ''
 
         // write survey link generated
-
         this.survLinkContent.innerText = `${this.survey_url}?code=${survey_code}`
 
         // view button
@@ -64,7 +62,7 @@ class AbbSurvey {
         sur_copy_a.addEventListener("click", function(e){
             e.preventDefault();
             const survey_page_url = document.getElementById('surv-link-content');
-            //alert(survey_page_url.innerText);
+
             navigator.clipboard.writeText(survey_page_url.innerText);
 
             let copy_span = document.getElementById("copy-feedback-notification");
@@ -84,7 +82,6 @@ class AbbSurvey {
 
         sur_copy_a.appendChild(sur_copy_icon);
 
-        
         this.survViewDiv.appendChild(sur_view_a);
         this.survCopyDiv.appendChild(sur_copy_a);
 
@@ -168,6 +165,7 @@ class AbbSurvey {
 
             const response_data = await response.json();
 
+            // store into the object the current survey code
             this.current_survey_code = code;
 
             return response_data;

@@ -323,13 +323,13 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
         survey_data = data.data[0]
 
-        console.log("survey response2: ", survey_data)
-
+        // create survey model from survey questions data
         const survey = new Survey.Model(survey_data.questions);
 
         survey.applyTheme(PlainTheme);
         survey.locale = "es";
 
+        // survey onComplete event handler
         survey.onComplete.add((survey) => {
           const resultData = [];
           for (const key in survey.data) {
@@ -338,13 +338,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
               const item = {
                 name: key, // question-name
                 value: question.value,
-                title: question.title,
+                title: question.title, // question
                 displayValue: question.displayValue
               };
               resultData.push(item);
             }
           }
           
+          // save results on database
           saveSurveyResults(resultData);
 
         });
@@ -370,13 +371,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
       }
 
       utils.showSuccess("Encuesta respondida con exito. Muchas Gracias!!", 'success');
-
     }
 
     function hideSpinner(){
         var spinner = document.getElementById('spinner-container');
         spinner.style.display='none';
-        //$('#ftco-loader-2').removeClass('show');
     }
 
   </script>

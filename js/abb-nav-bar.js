@@ -47,15 +47,21 @@ var nav_bar_data = [
             protected: false
         },
         {
+            name: 'Dashboard',
+            url: 'dashboard.html',
+            show: true,
+            protected: true
+        },
+        {
             name: 'Crear Tarjeta',
             url: 'fidelity-create.html',
-            show: true,
+            show: false, // deactivated
             protected: true
         },
         {
             name: 'Fidelity',
             url: null,
-            show: false,
+            show: false, // deactivated
             protected: true,
             is_submenu: true,
             submenu_id: "navbarDropdown",

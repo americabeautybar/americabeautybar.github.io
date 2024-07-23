@@ -8992,3 +8992,64 @@ textarea.form-control {
 }
 
 /* End Fidelity Check-In*/
+
+
+/* Start Dashboard Cards */
+
+.dash-card {
+  padding: 25px;
+  background: #fff;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  width: 80%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+  @media (max-width: 767.98px) {
+    .dash-card {
+      margin-bottom: 30px; 
+      width: 100%;
+    } 
+    }
+  .dash-card .info {
+    width: 100%; }
+    .dash-card .info h3 {
+      font-size: 15px;
+      text-transform: uppercase; }
+      .dash-card .info h3 a {
+        color: #000; }
+    .dash-card .info span.position {
+      display: block;
+      margin-bottom: 15px;
+      font-size: 12px;
+      font-weight: 400;
+      color: #cccccc; }
+  .dash-card .img {
+    width: 110px;
+    height: 110px;
+    border: 1px solid #f0f0f0;
+    margin: 0 auto;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease; }
+  .dash-card:hover, .dash-card:focus {
+    -webkit-box-shadow: 0px 3px 66px -24px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 3px 66px -24px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 3px 66px -24px rgba(0, 0, 0, 0.2); }
+    .dash-card:hover .img, .dash-card:focus .img {
+      border: 1px solid #fa5bdd; }
+
+
+/* End Dashboard Cards */
