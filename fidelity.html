@@ -352,6 +352,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
       if(hasError){
         utils.showError(resultMessage,'error');
+        hideSpinner();
+        return
       } else {
         if(resultMessage != ""){
           utils.showSuccess(resultMessage, 'success');
