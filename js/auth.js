@@ -59,9 +59,12 @@ class Auth {
     #supabase;
     #loginstorage;
 
-    constructor() {
+    constructor(config) {
         const SUPABASE_URL = 'https://qeggtkpneycwsvszhuyu.supabase.co'
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFlZ2d0a3BuZXljd3N2c3podXl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTUyMjE5MjcsImV4cCI6MjAzMDc5NzkyN30.nmw2M42yDOgBaoD9jHhizWs06d27qbu8-aGYcO1b_V8'
+        const SUPABASE_ANON_KEY = config.APP.SUPABASE_ANON_KEY
+
+        this.FIDELITY_CARD_EDGE_URL = config.APP.EDGE_API_URL;
+        this.SUPA_ANON_KEY = config.APP.SUPABASE_ANON_KEY;
 
         this.#supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         this.#loginstorage = new LoginStorage();
@@ -138,18 +141,29 @@ class Auth {
     
         const tokenValid = await this.validateAccessToken(accessToken);
 
-        //console.log("access token valid: ", tokenValid);
-    
+
         if(!tokenValid){
-            //console.log("redirecting user to login")
             const to_redirect = this.#getRedirectToUrl();
             this.#loginstorage.setStoreRedirectTo(to_redirect);
+            
             // logout user FIXME
+            /* 
+                in every page refresh this code runs in a mode where the token is not valid
+                or it can not get the token from localstorage, it can not even reach the dev 
+                tools debuger. it stores the redirect_to with the page you want to access, 
+                redirect the user to login page and seems at login page time it can validate 
+                correctly the token, so token is valid then redirect the user to 'redirect_to' 
+                and we explicity remove redirect_to this time when token is valid. 
+                Seems to me that if we want to logout the user this should happen
+                on login page where we can determine if token is really valid or not.
+            */
             //let logoutRes = await this.userLogout();
 
             window.location.href = "./login.html";
             return true;
-        }
+        } else {
+            this.#loginstorage.removeItemFromStore("redirect_to");
+        } 
         return false;
     }
 
@@ -218,6 +232,7 @@ class Auth {
         this.#loginstorage.removeItemFromStore("user_email");
         const { error } = await this.#supabase.auth.signOut();
         window.location.href = "./index.html";
+        return true
     }
 
     /*
@@ -293,7 +308,31 @@ class Auth {
         }
     }
 
+    getUserRolesFromToken(){
+        let accessToken = this.#loginstorage.getStoreAccessToken();
+
+        if (accessToken == undefined || accessToken == ""){
+            return [];
+        }
+
+        try{
+
+            let tparsed = JSON.parse(atob(accessToken.split('.')[1]));
+
+            let user_roles = tparsed?.app_metadata?.user_roles;
+
+            if (user_roles != undefined && user_roles != ""){
+                let user_roles_arr = user_roles.split(',');
+                return user_roles_arr.map(role => parseInt(role));
+            } else{
+                return []
+            }
+
+        } catch(error){
+            return []
+        }
+    }
 }
 
-var auth = new Auth();
+var auth = new Auth(CONFIG);
 
