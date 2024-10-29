@@ -262,6 +262,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     async function loadingCheckPage(){
       is_redirect = await auth.redirectToIndexIfTokenStillValid();
       if(!is_redirect){
+        let logoutRes = await auth.userLogout();
         document.querySelector("body").style.display = "block";
       }
     }

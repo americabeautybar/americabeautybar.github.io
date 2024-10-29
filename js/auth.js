@@ -22,8 +22,15 @@ class LoginStorage {
     setStoreAccessToken(value){
         this.#setItemToStore("stoken", value);
     }
+
+    getStoreRefreshAccessToken(){
+        return this.#getItemFromStore("srtoken");
+    }
     
-    
+    setStoreRefreshAccessToken(value){
+        this.#setItemToStore("srtoken", value);
+    }
+        
     getStoreUserEmail(){
         return this.#getItemFromStore("user_email");
     }
@@ -94,20 +101,116 @@ class Auth {
 
     /*
         validates if given user_jwt is still valid
-    */
-    async validateAccessToken(user_jwt){
 
-        if(user_jwt == null || user_jwt == undefined){
-          return false;
+        response:
+            - token valid
+            - token was refreshed
+    */
+    async validateAccessToken(user_jwt, refresh_token){
+
+        if(user_jwt == null || user_jwt == undefined || user_jwt == ""){
+          return [false, false];
+        }
+
+        const max_hr_refresh = this.#getMaxHrRefreshingToken(user_jwt)
+
+        let {data, error} = await this.#supabase.auth.getUser(user_jwt)
+
+        // if token is valid calculate if it overpass the max_hr_refresh
+        if(data && data.user){
+
+            const last_sign_in_in_hours = this.#getLastSignInHours(data.user.last_sign_in_at)
+
+            //console.log("Max hr for refresh: ", max_hr_refresh)
+
+            if (last_sign_in_in_hours >= max_hr_refresh){
+                
+                this.#loginstorage.removeItemFromStore("stoken");
+                this.#loginstorage.removeItemFromStore("srtoken");
+                await this.logout();
+
+                return [false, false];
+            }
         }
     
-        const {data, error} = await this.#supabase.auth.getUser(user_jwt)
-    
+        // if token is not valid try to refresh it
         if(data === undefined || error){
-            return false;
-        }
+            
+            if(refresh_token == null || refresh_token == undefined){
+
+                this.#loginstorage.removeItemFromStore("stoken");
+                this.#loginstorage.removeItemFromStore("srtoken");
+                
+                return [false, false];
+            }
+
+            //console.log("try to refresh the token");
+
+            let { data, error } = await this.#supabase.auth.refreshSession({ refresh_token: refresh_token })
+            
+            //console.log("refresh data: ", data, " - refresh error: ", error);
+
+            // after refreshing the token calculate if it overpass the max_hr_refresh
+            if(data && data.user && data.session){
+
+                const max_hr_refresh = this.#getMaxHrRefreshingToken(data.session.access_token)
+
+                const last_sign_in_in_hours = this.#getLastSignInHours(data.user.last_sign_in_at)
     
-        return true;
+                if (last_sign_in_in_hours >= max_hr_refresh ){
+                    
+                    this.#loginstorage.removeItemFromStore("stoken");
+                    this.#loginstorage.removeItemFromStore("srtoken");
+                    await this.logout();
+    
+                    return [false, false];
+                }
+            }
+
+            // if there is any issue refreshing the token return false
+            if(data === undefined || error){
+                //console.log("-------- data or session are undefined");
+                return [false, false];
+            }
+
+            /*
+            const continue_refresh_token = this._getContinueRefreshingToken(data.session.access_token)
+
+            if (!continue_refresh_token){
+                console.log("continue_refresh_token >>>> return [false, false] ", continue_refresh_token )
+                
+                this.#loginstorage.removeItemFromStore("stoken");
+                this.#loginstorage.removeItemFromStore("srtoken");
+
+                return [false, false];
+            }
+            */
+
+            // if we successfully refreshed the token then update the stored values
+            this.#loginstorage.setStoreAccessToken(data.session.access_token);
+            this.#loginstorage.setStoreRefreshAccessToken(data.session.refresh_token);
+
+            //console.log("TOKEN WAS REFRESHED.....")
+
+            return [true, true];
+        } 
+    
+        return [true, false];
+    }
+
+    #getLastSignInHours(last_sign_in_timestamp){
+        
+        var last_user_sign_in = new Date(last_sign_in_timestamp);
+
+        var current_timestamp = new Date();
+
+        var last_sign_in_in_hours = (current_timestamp - last_user_sign_in)/1000/60/60;
+
+        //console.log("Last User Sign In: ", last_user_sign_in);
+        //console.log("current timestamp: ", current_timestamp);
+        //console.log("Last User Sign In (Hours): ", last_sign_in_in_hours);
+        
+        return last_sign_in_in_hours;
     }
 
     /*
@@ -117,8 +220,9 @@ class Auth {
     async redirectToIndexIfTokenStillValid(){
         
         let accessToken = this.#loginstorage.getStoreAccessToken();
+        let refreshToken = this.#loginstorage.getStoreRefreshAccessToken();
     
-        const tokenValid = await this.validateAccessToken(accessToken);
+        const [tokenValid, tokenRefreshed] = await this.validateAccessToken(accessToken, refreshToken);
         if(tokenValid){
             // the access token is still valid, redirect to home page
             window.location.href = "./index.html";
@@ -136,10 +240,11 @@ class Auth {
         //console.log(">>>>> redirecToLoginIfTokenIsNotValid")
 
         let accessToken = this.#loginstorage.getStoreAccessToken()
+        let refreshToken = this.#loginstorage.getStoreRefreshAccessToken();
 
         //console.log("access token 1 : ", accessToken)
     
-        const tokenValid = await this.validateAccessToken(accessToken);
+        const [tokenValid, tokenRefreshed] = await this.validateAccessToken(accessToken, refreshToken);
 
 
         if(!tokenValid){
@@ -196,8 +301,11 @@ class Auth {
         if(data.user && data.session){
             // store user session info into localstorage
             this.#loginstorage.setStoreAccessToken(data.session.access_token);
+            this.#loginstorage.setStoreRefreshAccessToken(data.session.refresh_token);
             this.#loginstorage.setStoreUserEmail(data.user.email);
             this.#loginstorage.setStoreUserName(data.user.user_metadata.display_name);
+
+            //console.log("SESSION >>>> ", data.session);
 
             const redirect_to = this.#loginstorage.getStoreRedirectTo();
 
@@ -228,6 +336,7 @@ class Auth {
     */
     async logout(){
         this.#loginstorage.removeItemFromStore("stoken");
+        this.#loginstorage.removeItemFromStore("srtoken");
         this.#loginstorage.removeItemFromStore("user_name");
         this.#loginstorage.removeItemFromStore("user_email");
         const { error } = await this.#supabase.auth.signOut();
@@ -241,6 +350,7 @@ class Auth {
     async userLogout(){
         //console.log("login out user...")
         this.#loginstorage.removeItemFromStore("stoken");
+        this.#loginstorage.removeItemFromStore("srtoken");
         this.#loginstorage.removeItemFromStore("user_name");
         this.#loginstorage.removeItemFromStore("user_email");
         const { error } = await this.#supabase.auth.signOut();
@@ -330,6 +440,52 @@ class Auth {
 
         } catch(error){
             return []
+        }
+    }
+
+    _getContinueRefreshingToken(accessToken){
+        if (accessToken == undefined || accessToken == ""){
+            return false;
+        }
+
+        try{
+            let tparsed = JSON.parse(atob(accessToken.split('.')[1]));
+            let continue_refresh = tparsed?.app_metadata?.continue_refresh;
+
+            //console.log("continue_refresh >>>> ", continue_refresh);
+
+            if (continue_refresh != undefined && continue_refresh != ""){
+                return continue_refresh;
+            } else{
+                return false
+            }
+        } catch(error){
+            return false
+        }
+    }
+
+    #getMaxHrRefreshingToken(accessToken){
+
+        if (accessToken == undefined || accessToken == ""){
+            return false;
+        }
+
+        try{
+
+            let tparsed = JSON.parse(atob(accessToken.split('.')[1]));
+
+            let max_hr_refresh = tparsed?.app_metadata?.max_hr_refresh;
+
+            //console.log("max_hr_refresh >>>> ", max_hr_refresh);
+
+            if (max_hr_refresh != undefined && max_hr_refresh != ""){
+                return max_hr_refresh;
+            } else{
+                return 0
+            }
+
+        } catch(error){
+            return 0
         }
     }
 }

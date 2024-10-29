@@ -2,6 +2,7 @@ $(document).ready(function() {
 
     document.querySelector("body").style.display = "none";
 
+    //console.log("running verifyAuthenticatedUser [1]...");
 	verifyAuthenticatedUser();
 
 })
@@ -19,6 +20,7 @@ async function verifyAuthenticatedUser(){
 
 $(window).focus(function(e) {
 	// this will force the page to validate the access token if any.
+    //console.log("running validateAccessTokenOnFocus [2]...");
 	validateAccessTokenOnFocus();
 });
 
