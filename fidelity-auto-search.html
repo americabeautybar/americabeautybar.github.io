@@ -50,6 +50,19 @@
         display: flex;
       }
 
+      .form-container{
+        text-align: justify;
+        width: 50%; 
+        align-items: center;
+        align-content: center;
+      }
+
+      @media screen and (max-width: 768px) {
+        .form-container{
+          width: 100%; 
+        }
+      }
+
     </style>
 
      <!-- Supabase -->
@@ -128,7 +141,7 @@
           <!-- search input -->
           <div style="width: 100%;">
             <form id="fidelity-search-form" name="fidelity-search-form" style="width: 100%; padding: 20px 0;display: flex; justify-content: center;">
-              <div style="text-align: justify;width: 50%; align-items: center;align-content: center;">
+              <div class="form-container">
                 <div class="col-12" style="padding-bottom: 10px; display: flex; flex-direction: column;">
                   <div style="width: 100%;">
                     <input type="tel" class="form-control" title="formato invalido" id="phone-number" name="phone" autocomplete="off" placeholder="Buscar por Telefono" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required />
