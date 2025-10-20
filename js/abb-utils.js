@@ -51,18 +51,30 @@ class Utils {
         }
     }
 
-    setModalErrorText(txtMsg){
-        $("#fc-notification-modal-body").text(txtMsg);
-        $("#fc-notification-modal-icon").attr("src","images/cross-mark.png");
+    setModalErrorText(txtMsg, modalId=""){
+        let parentSelector = "#fc-notification-modal" // default notification modal
+        if(modalId != ""){
+            parentSelector = "#" + modalId
+        }
+        $(parentSelector + " #fc-notification-modal-body").text(txtMsg);
+        $(parentSelector + " #fc-notification-modal-icon").attr("src","images/cross-mark.png");
     }
 
-    setModalSuccessText(txtMsg){
-        $("#fc-notification-modal-body").text(txtMsg);
-        $("#fc-notification-modal-icon").attr("src","images/check-mark.png");
+    setModalSuccessText(txtMsg, modalId=""){
+        let parentSelector = "#fc-notification-modal" // default notification modal
+        if(modalId != ""){
+            parentSelector = "#" + modalId
+        }
+        $(parentSelector + " #fc-notification-modal-body").text(txtMsg);
+        $(parentSelector + " #fc-notification-modal-icon").attr("src","images/check-mark.png");
     }
 
-    showModal(){
-        $("#fc-notification-modal").modal('show');
+    showModal(modalId=""){
+        let modalSelector = "#fc-notification-modal"
+        if(modalId != ""){
+            modalSelector = "#" + modalId
+        }
+        $(modalSelector).modal('show');
     }
 }
 

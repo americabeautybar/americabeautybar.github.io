@@ -78,6 +78,73 @@ class FidelityCard {
     }
 
     /*
+        Execute Edge Function to CheckIn Fidelity Card With PIN
+    */
+    async checkInFidelityCardWithPIN(card_id, pin, captcha){
+        
+        const checkInFidelityCardEndPointWithPIN = `${this.FIDELITY_CARD_EDGE_URL}/fidelity-card-api/checkin-with-pin`
+
+        const req_data = {
+            cardId: card_id,
+            pin: pin,
+            captcha: captcha
+        }
+
+        try{ 
+            const response = await fetch(checkInFidelityCardEndPointWithPIN, {
+                method: "POST",
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.SUPA_ANON_KEY}`
+                },
+                body: JSON.stringify(req_data)
+            });
+
+            const response_data = await response.json();
+    
+            return response_data;
+
+        } catch (error){
+            return {error: `unhandled error: ${error.message}`}
+        }
+    }
+    
+
+    /*
+        Execute Edge Function to Search Fidelity Card With PIN
+    */
+    async searchFidelityCardWithPIN(phone, pin, captcha){
+    
+        const searchFidelityCardEndPoint = `${this.FIDELITY_CARD_EDGE_URL}/fidelity-card-api/search-with-pin`
+
+        const req_data = {
+            phone: phone,
+            pin: pin,
+            captcha: captcha
+        }
+
+        try{ 
+            const response = await fetch(searchFidelityCardEndPoint, {
+                method: "POST",
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.SUPA_ANON_KEY}`
+                },
+                body: JSON.stringify(req_data)
+            });
+
+            const response_data = await response.json();
+
+            return response_data;
+
+        } catch (error){
+            return {error: `unhandled error: ${error.message}`}
+        }
+    }
+    
+    /*
         Execute Edge Function to CheckIn Fidelity Card
     */
     async checkInFidelityCard(card_id){
