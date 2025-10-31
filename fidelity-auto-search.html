@@ -296,6 +296,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     
     var fcApp = new FidelityCard(CONFIG);
 
+    var _token = null;
+
     $(document).ready(function() {
 
         hideSpinner()
@@ -317,7 +319,13 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             return;
           }
 
-          utils.showModal("fc-pin-modal");
+          
+          // if we have already a token then use it, if not show pin modal
+          if (_token != null && _token != ""){
+            searchFidelityCard(phoneNum.toString(), _token, "");
+          } else {
+            utils.showModal("fc-pin-modal");
+          }
         });
 
         
@@ -349,7 +357,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
           // close PIN modal
           $('#fc-pin-modal').modal('hide');
 
-          searchFidelityCard(phoneNum.toString(), pin, "");
+          // get token and search fidelity card with token
+          getTokenAndSearchCard(phoneNum.toString(), pin, "");
         })
 
         // PIN modal close event
@@ -364,30 +373,67 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
     });
 
-    // search card by phone number
-    async function searchFidelityCard(phone, pin, captcha){
 
-      displaySpinner();
-      $("#fc-search-btn").prop('disabled', true);
+    async function getTokenAndSearchCard(phone, pin, captcha){
+      onLoadingPage();
+
+      // get the token with the PIN
+      let token_res = await fcApp.getTokenWithPIN(pin);
+      if(token_res.error){
+        utils.setModalErrorText(token_res.error)
+        utils.showModal();
+        onLoadingPageEnd();
+        return;
+      }
+
+      _token = token_res.access_token;
+
+      await searchFidelityCard(phone, token_res.access_token, captcha)
+    }
+
+    // search card by phone number
+    async function searchFidelityCard(phone, token, captcha){
+
+      onLoadingPage();
 
       // search fidelity card by phone number
-      let res = await fcApp.searchFidelityCardWithPIN(phone, pin, captcha);
+      let [res, res_status] = await fcApp.searchFidelityCardWithToken(phone, token, captcha);
 
-      if(res.error){
-        utils.setModalErrorText(res.error)
-        utils.showModal();
+      if(res.error || res_status == 401){
+        if(res_status == 401){
+          // token invalid or expired, show message and redirect to search page to clean up everything
+          utils.setModalErrorText("la sesion ha terminado","fc-notification-modal", function(){
+            window.location.href = "./fidelity-auto-search.html";
+            return true;
+          })
+          utils.showModal();
+        } else {
+          // any other error
+          utils.setModalErrorText(res.error)
+          utils.showModal();
+        }
       } else {
         if(res.cards){
           if(res.cards.length > 1){
             utils.setModalErrorText("se ha encontrado mas de 1 tarjeta para su busqueda")
             utils.showModal();
+            onLoadingPageEnd();
+            return 
           }
-          // redirect to check-in page
+          // redirect to check-in page + token
           cardId = res.cards[0].cardId
-          window.location.href = "./fidelity-auto-checkin.html?code=" + cardId + "#fidelityCheckinPage";
+          window.location.href = "./fidelity.html?code=" + cardId + "&token=" + token + "#fidelityCheckinPage";
         }
       }
+      onLoadingPageEnd();
+    }
 
+    function onLoadingPage(){
+      displaySpinner();
+      $("#fc-search-btn").prop('disabled', true);
+    }
+
+    function onLoadingPageEnd(){
       hideSpinner();
       $("#fc-search-btn").prop('disabled', false);
     }

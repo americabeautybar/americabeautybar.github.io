@@ -78,20 +78,20 @@ class FidelityCard {
     }
 
     /*
-        Execute Edge Function to CheckIn Fidelity Card With PIN
+        Execute Edge Function to CheckIn Fidelity Card With Token
     */
-    async checkInFidelityCardWithPIN(card_id, pin, captcha){
+    async checkInFidelityCardWithToken(card_id, token, captcha){
         
-        const checkInFidelityCardEndPointWithPIN = `${this.FIDELITY_CARD_EDGE_URL}/fidelity-card-api/checkin-with-pin`
+        const checkInFidelityCardWithTokenEndPoint = `${this.FIDELITY_CARD_EDGE_URL}/fidelity-card-api/checkin-with-token`
 
         const req_data = {
             cardId: card_id,
-            pin: pin,
+            token: token,
             captcha: captcha
         }
 
         try{ 
-            const response = await fetch(checkInFidelityCardEndPointWithPIN, {
+            const response = await fetch(checkInFidelityCardWithTokenEndPoint, {
                 method: "POST",
                 headers: {
                 'Accept': 'application/json',
@@ -103,29 +103,61 @@ class FidelityCard {
 
             const response_data = await response.json();
     
-            return response_data;
+            return [response_data, response.status];
 
         } catch (error){
-            return {error: `unhandled error: ${error.message}`}
+            return [{error: `unhandled error: ${error.message}`}, 500]
         }
     }
     
 
     /*
-        Execute Edge Function to Search Fidelity Card With PIN
+        Execute Edge Function to Search Fidelity Card With Token
     */
-    async searchFidelityCardWithPIN(phone, pin, captcha){
+    async searchFidelityCardWithToken(phone, token, captcha){
     
-        const searchFidelityCardEndPoint = `${this.FIDELITY_CARD_EDGE_URL}/fidelity-card-api/search-with-pin`
+        const searchFidelityCardWithTokenEndPoint = `${this.FIDELITY_CARD_EDGE_URL}/fidelity-card-api/search-with-token`
 
         const req_data = {
             phone: phone,
-            pin: pin,
+            token: token,
             captcha: captcha
         }
 
         try{ 
-            const response = await fetch(searchFidelityCardEndPoint, {
+            const response = await fetch(searchFidelityCardWithTokenEndPoint, {
+                method: "POST",
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.SUPA_ANON_KEY}`
+                },
+                body: JSON.stringify(req_data)
+            });
+
+            
+            const response_data = await response.json();
+
+            return [response_data, response.status];
+
+        } catch (error){
+            return [{error: `unhandled error: ${error.message}`}, 500]
+        }
+    }
+
+    /*
+        Execute Edge Function to get a Token base on a PIN
+    */
+    async getTokenWithPIN(pin){
+    
+        const tokenFidelityCardEndPoint = `${this.FIDELITY_CARD_EDGE_URL}/fidelity-card-api/token-with-pin`
+
+        const req_data = {
+            pin: pin
+        }
+
+        try{ 
+            const response = await fetch(tokenFidelityCardEndPoint, {
                 method: "POST",
                 headers: {
                 'Accept': 'application/json',

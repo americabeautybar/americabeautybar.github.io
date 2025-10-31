@@ -324,6 +324,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
         const urlParams = new URLSearchParams(window.location.search);
         var card_id_param = urlParams.get("code");
+        var token_param = urlParams.get("token");
 
         if (card_id_param == null || card_id_param == ""){
             utils.showError('code parameter can not be null','error')
@@ -341,8 +342,15 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             return;
           }
 
-          // show modal to enter PIN
-          utils.showModal("fc-pin-modal");
+          // check if there is token
+          // if token is present then continue with the checking
+          if (token_param != null && token_param != ""){
+            checkInFidelityCard(card_id_param, token_param, "");
+          } else {
+            // if token is not prsent then show up the pin modal
+            // show modal to enter PIN
+            utils.showModal("fc-pin-modal");
+          }
         });
 
         $("#fc-pin-modal-btn").click(function(e){
@@ -367,7 +375,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
           // close PIN modal
           $('#fc-pin-modal').modal('hide');
 
-          checkInFidelityCard(card_id_param, pin, "");
+          getTokenAndCheckInFidelityCard(card_id_param, pin, "");
         });
 
         $('#fc-pin-modal').on('hidden.bs.modal', function () {
@@ -399,20 +407,42 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
       hideSpinner();
     }
 
-    async function checkInFidelityCard(card_id, pin, captcha){
+    async function getTokenAndCheckInFidelityCard(card_id, pin, captcha){
 
-      // hide card and any card error/success
-      fcApp.hideCard();
-      utils.hideError('error');
-      utils.hideSuccess('success');
+      onLoadingPage();
 
-      displaySpinner();
-      $("#fc-checkin-btn").prop('disabled', true);
+      // get the token with the PIN
+      let token_res = await fcApp.getTokenWithPIN(pin);
+      if(token_res.error){
+        utils.setModalErrorText(token_res.error)
+        utils.showModal();
+        onLoadingPageEnd();
+        return;
+      }
 
-      let res = await fcApp.checkInFidelityCardWithPIN(card_id, pin, captcha);
+      // checkIn card with token
+      checkInFidelityCard(card_id, token_res.access_token, captcha)
+    }
 
-      if(res.error){
-        utils.setModalErrorText(res.error)
+    async function checkInFidelityCard(card_id, token, captcha){
+
+      onLoadingPage();
+
+      let [res, res_status] = await fcApp.checkInFidelityCardWithToken(card_id, token, captcha);
+
+      if(res.error || res_status == 401){
+        if(res_status == 401){
+          // token invalid or expired, show message and redirect to search page to clean up everything
+          utils.setModalErrorText("la sesion ha terminado","fc-notification-modal", function(){
+            window.location.href = "./fidelity-auto-search.html";
+            return true;
+          })
+          utils.showModal();
+        } else {
+          // any other error
+          utils.setModalErrorText(res.error)
+          utils.showModal();
+        }
       } else {
         utils.setModalSuccessText(res.result)
       }
@@ -423,6 +453,20 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
       // show modal
       utils.showModal();
 
+      onLoadingPageEnd();
+    }
+
+    function onLoadingPage(){
+      // hide card and any card error/success
+      fcApp.hideCard();
+      utils.hideError('error');
+      utils.hideSuccess('success');
+
+      displaySpinner();
+      $("#fc-checkin-btn").prop('disabled', true);
+    }
+
+    function onLoadingPageEnd(){
       hideSpinner();
 
       if(!fcApp.has_max_count){

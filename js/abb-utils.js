@@ -51,13 +51,21 @@ class Utils {
         }
     }
 
-    setModalErrorText(txtMsg, modalId=""){
+    setModalErrorText(txtMsg, modalId="", onCloseModal=null){
         let parentSelector = "#fc-notification-modal" // default notification modal
         if(modalId != ""){
             parentSelector = "#" + modalId
         }
         $(parentSelector + " #fc-notification-modal-body").text(txtMsg);
         $(parentSelector + " #fc-notification-modal-icon").attr("src","images/cross-mark.png");
+
+        // remove any previous handler to avoid stacking the functionality.
+        $(parentSelector).off('hidden.bs.modal');
+        
+        if(onCloseModal != null){
+            $(parentSelector).on('hidden.bs.modal', onCloseModal);
+        }
+        
     }
 
     setModalSuccessText(txtMsg, modalId=""){

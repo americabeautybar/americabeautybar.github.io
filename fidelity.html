@@ -52,6 +52,23 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
 
+    <style>
+
+      #spinner-container{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        color: black;
+        display: flex;
+      }
+
+    </style>
+
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -104,14 +121,6 @@
     
     <div class="hero-wrap header-fc" style="background-image: url('images/bg_nails_3.jpg'); /* background-position: 50% -274px;*/ background-position: center center;">
       <div class="overlay"></div>
-      <!-- login nav bar -->
-      <div class="login-user-top">
-        <div>
-          <ul id="login-menu">
-          </ul>
-        </div>
-      </div>
-      <!-- end login nav bar -->
       <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center header-fc">
           <div class="col-md-8 ftco-animate text-center">
@@ -131,7 +140,7 @@
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-	    <div class="container">
+	    <div class="container" id="fidelityCheckinPage">
 	      <a class="navbar-brand" href="index.html">America Beauty Bar</a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
@@ -156,31 +165,32 @@
 	</a>
 	<!-- END float WA Button -->
 
-  <section class="ftco-section">
+  <section class="ftco-section" style="padding-bottom: 1em;">
     <div class="overlay"></div>
     <div class="container">
       <div class="row justify-content-center mb-5 pb-3">
         <div class="col-md-7 heading-section ftco-animate text-center">
           <h2 class="mb-4">Tarjeta de Fidelidad</h2>
-          <p>¡Gracias por ser parte de nuestra familia de belleza! Para agradecer tu lealtad, hemos creado una exclusiva tarjeta de fidelidad. Con cada visita, acumularás puntos que te acercarán a increíbles recompensas. ¡En tu sexta visita, disfruta de descuentos especiales o servicios gratuitos como muestra de nuestro aprecio por tu preferencia!.</p>
-          
-          <div class="mt-5">
-            <div class="d-flex justify-content-center">
-              <div id="spinner-container">
-                <div class="spinner-border" role="status">
-                  <span class="sr-only">.</span>
-                </div>
-                <div>
-                  Procesando...
-              </div>
-            </div>
-          </div>
-        </div>
+          <p>¡Gracias por tu lealtad! Con nuestra tarjeta de fidelidad acumulas visitas y obtienes recompensas. En la sexta visita, disfruta descuentos o servicios gratis.</p> 
+          <p>Haz clic en <i>Registrar Visita</i>, pide a una colaboradora que ingrese su PIN y espera la confirmación.</p>
         </div>
       </div>
-      <div class="row justify-content-center mb-2 pb-3">
-        <div class="col-md-7 d-flex mb-sm-4 ftco-animate">
 
+      <!-- fidelity card start -->
+      <div class="row justify-content-center mb-2 pb-3">
+        <div class="col-md-7 heading-section ftco-animate text-center fc-checkin-container">
+
+          <!-- spinner -->
+          <div id="spinner-container">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">.</span>
+            </div>
+            <div>
+              Procesando...
+            </div>
+          </div>
+          <!-- spinner end -->          
+          
           <div class="fc-card fc-hidden-card" id="fc-card">
             <div class="fc-abb-logo"></div>
               <div class="fc-main-title">
@@ -213,17 +223,79 @@
           <div id="success" class="alert alert-success" style="display: none;"></div>
         </div>
       </div>
+      <!-- fidelity card end -->
 
+      <!-- check-in button -->
       <div class="row justify-content-center mb-5 pb-3">
+        <div class="col-md-7 heading-section ftco-animate text-center mb-5">
+          <button type="button" class="btn btn-primary btn-lg" id="fc-checkin-btn">Registrar Visita</button>
+        </div>        
+      </div>
+      <!-- check-in button end -->
+
+
+      <!--<div class="row justify-content-center mb-5 pb-3">
         <div class="col-md-7 heading-section ftco-animate text-center" style="display: flex; justify-content: center;">
           <div id="qrcode"></div>
         </div>
+      </div>-->
+      
+      <!-- PIN Modal -->
+      <div class="modal fade" id="fc-pin-modal" tabindex="-1" role="dialog" aria-labelledby="fc-pin-modal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header" style="border-bottom: none;">
+              <h5 class="modal-title" style="color:black;">Ingresar PIN</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" style="color:black;">
+              <div id="fc-notification-modal-body" style="text-align: center; margin-top: 0.5em;">
+                <span style="color:#2b2828;">Pidele a una colaboradora ingresar su PIN para registrar tu visita</span>
+              </div>
+              <div style="display: flex; align-items: center; justify-content: center; margin-top: 10px;">
+                <input type="password" id="fc-pin" placeholder="Ingresar PIN" style="padding-left: 5px;"/>
+              </div>
+            </div>
+            <div class="modal-footer" style="border-top:none; justify-content: center;">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+              <button id="fc-pin-modal-btn" type="button" class="btn btn-primary">Aceptar</button>
+            </div>
+          </div>
+        </div>
       </div>
+      <!-- PIN Modal End -->
+    
+      <!-- Confirmation Modal -->
+      <div class="modal fade" id="fc-notification-modal" tabindex="-1" role="dialog" aria-labelledby="fc-notification-modal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header" style="border-bottom: none;">
+              <h5 class="modal-title" style="color:black;">Check-In Tarjeta</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" style="color:black;">
+              <div style="display: flex; align-items: center; justify-content: center;">
+                <img id="fc-notification-modal-icon" style="width: 3em; height: 3em;"/>
+              </div>
+              <div id="fc-notification-modal-body" style="text-align: center; margin-top: 0.5em;"></div>
+            </div>
+            <div class="modal-footer" style="border-top:none;">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Confirmation Modal End -->
     </div>
   </section>
 	
-    <section class="ftco-section" style="padding-top: 1em;">
-      <div class="overlay"></div>
+  <!-- carousel promos -->
+  <section class="ftco-section" style="padding-top: 1em;">
+    <div class="overlay"></div>
       <div class="container">
         <div class="row justify-content-center mb-5 pb-3">
           <div class="col-md-7 heading-section ftco-animate text-center">
@@ -237,9 +309,9 @@
             <div id="carouselPromos"></div>
           </div>	
         </div>
-
-      </div>
-    </section>  
+    </div>
+  </section>
+  <!-- carousel promos end -->
 
 	<!-- footer -->
   <footer class="ftco-footer ftco-section img">
@@ -325,16 +397,17 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         abbC$('carouselPromos',promos_data.promos);
         // end carousel
 
-        //$('#ftco-loader-2').addClass('show');
-
         utils.hideError('error');
         utils.hideSuccess('success');
+
+        $("#fc-checkin-btn").prop('disabled', true);
 
         var loc = window.location.toString();
         params = loc.split('?')[1];
 
         const urlParams = new URLSearchParams(window.location.search);
         var card_id_param = urlParams.get("code");
+        var token_param = urlParams.get("token");
 
         if (card_id_param == null || card_id_param == ""){
             utils.showError('code parameter can not be null','error')
@@ -343,6 +416,58 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         }
 
         loadFidelityCard(card_id_param);
+
+        
+        $("#fc-checkin-btn").click(function(e){
+
+          if (card_id_param == null || card_id_param == ""){
+            utils.showError('code parameter can not be null','error');
+            return;
+          }
+
+          // check if there is token
+          // if token is present then continue with the checking
+          if (token_param != null && token_param != ""){
+            checkInFidelityCard(card_id_param, token_param, "");
+          } else {
+            // if token is not prsent then show up the pin modal
+            // show modal to enter PIN
+            utils.showModal("fc-pin-modal");
+          }
+        });
+
+        $("#fc-pin-modal-btn").click(function(e){
+
+          let pin = $("#fc-pin").val()
+          $("#fc-pin").val('')
+          
+          if (card_id_param == null || card_id_param == ""){
+            $('#fc-pin-modal').modal('hide');
+            utils.setModalErrorText('code parameter can not be null');
+            utils.showModal();
+            return;
+          }
+
+          if (pin == ""){
+            $('#fc-pin-modal').modal('hide');
+            utils.setModalErrorText('El PIN es requerido');
+            utils.showModal();
+            return;
+          }
+
+          // close PIN modal
+          $('#fc-pin-modal').modal('hide');
+
+          getTokenAndCheckInFidelityCard(card_id_param, pin, "");
+        });
+
+        $('#fc-pin-modal').on('hidden.bs.modal', function () {
+          $("#fc-pin").val('');
+        });
+
+        $('#fc-pin-modal').on('shown.bs.modal', function () {
+          $('#fc-pin').focus();
+        });
 
     });
 
@@ -359,24 +484,106 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
           utils.showSuccess(resultMessage, 'success');
         }
       }
+      
+      if(!fcApp.has_max_count){
+        $("#fc-checkin-btn").prop('disabled', false);
+      }
 
-      var qrcode = new QRCode(document.getElementById("qrcode"), {
+      /*var qrcode = new QRCode(document.getElementById("qrcode"), {
           text: `${CONFIG.APP.BASE_URL}fidelity-checkin.html?code=${card_id}`,
           width: 128,
           height: 128,
           colorDark : "#000000",
           colorLight : "#ffffff",
           correctLevel : QRCode.CorrectLevel.H
-      });
+      });*/
 
         hideSpinner();
     }
 
-    function hideSpinner(){
-        var spinner = document.getElementById('spinner-container');
-        spinner.style.display='none';
-        //$('#ftco-loader-2').removeClass('show');
+  async function getTokenAndCheckInFidelityCard(card_id, pin, captcha){
+
+    onLoadingPage();
+
+    // get the token with the PIN
+    let token_res = await fcApp.getTokenWithPIN(pin);
+    if(token_res.error){
+      utils.setModalErrorText(token_res.error)
+      utils.showModal();
+      onLoadingPageEnd();
+      return;
     }
+
+    // checkIn card with token
+    checkInFidelityCard(card_id, token_res.access_token, captcha)
+  }
+
+  async function checkInFidelityCard(card_id, token, captcha){
+
+    onLoadingPage();
+
+    let [res, res_status] = await fcApp.checkInFidelityCardWithToken(card_id, token, captcha);
+
+    if(res.error || res_status == 401){
+      if(res_status == 401){
+        // token invalid or expired, show message and redirect to search page to clean up everything
+        utils.setModalErrorText("la sesion ha terminado","fc-notification-modal", function(){
+          window.location.href = "./fidelity-auto-search.html";
+          return true;
+        })
+        utils.showModal();
+      } else {
+        // any other error
+        utils.setModalErrorText(res.error)
+        utils.showModal();
+      }
+    } else {
+      utils.setModalSuccessText(res.result)
+    }
+
+    // show modal
+    utils.showModal();
+
+    onLoadingPageEnd();
+  }
+
+  function onLoadingPage(){
+    // hide card and any card error/success
+    fcApp.hideCard();
+    utils.hideError('error');
+    utils.hideSuccess('success');
+
+    displaySpinner();
+    $("#fc-checkin-btn").prop('disabled', true);
+  }
+
+  async function onLoadingPageEnd(){
+    let qryParams = getQueryParams();
+  
+    // reload the card
+    await loadFidelityCard(qryParams.card_id_param);
+
+    hideSpinner();
+  }
+
+  function getQueryParams(){
+    const urlParams = new URLSearchParams(window.location.search);
+    var card_id_param = urlParams.get("code");
+    var token_param = urlParams.get("token");
+
+    return {card_id_param: card_id_param, token_param: token_param}
+  }
+
+  function hideSpinner(){
+    var spinner = document.getElementById('spinner-container');
+    spinner.style.display='none';
+  }
+
+  function displaySpinner(){
+    var spinner = document.getElementById('spinner-container');
+    spinner.style.display='flex';
+  }
+
 
   </script>
     
