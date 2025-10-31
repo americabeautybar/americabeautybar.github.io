@@ -402,6 +402,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
         $("#fc-checkin-btn").prop('disabled', true);
 
+        // no display checkIn button for now *************
+        let check_in_btn = document.getElementById('fc-checkin-btn');
+        check_in_btn.style.display = 'none';
+        // ***********************************************
+
         var loc = window.location.toString();
         params = loc.split('?')[1];
 
