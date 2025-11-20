@@ -259,8 +259,8 @@
               </div>
             </div>
             <div class="modal-footer" style="border-top:none; justify-content: center;">
-              <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
               <button id="fc-pin-modal-btn" type="button" class="btn btn-primary">Aceptar</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
             </div>
           </div>
         </div>
@@ -402,11 +402,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
         $("#fc-checkin-btn").prop('disabled', true);
 
-        // no display checkIn button for now *************
-        let check_in_btn = document.getElementById('fc-checkin-btn');
-        check_in_btn.style.display = 'none';
-        // ***********************************************
-
         var loc = window.location.toString();
         params = loc.split('?')[1];
 
@@ -418,6 +413,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             utils.showError('code parameter can not be null','error')
             hideSpinner()
             return;
+        }
+
+        // only display check_in button if there is a token
+        if (!token_param){
+          let check_in_btn = document.getElementById('fc-checkin-btn');
+          check_in_btn.style.display = 'none';
         }
 
         loadFidelityCard(card_id_param);
@@ -490,7 +491,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         }
       }
       
-      if(!fcApp.has_max_count){
+      if(!fcApp.has_max_count && !fcApp.stamped_today){
         $("#fc-checkin-btn").prop('disabled', false);
       }
 
@@ -543,7 +544,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         utils.showModal();
       }
     } else {
-      utils.setModalSuccessText(res.result)
+      utils.setModalSuccessText(res.result);
     }
 
     // show modal

@@ -4,6 +4,9 @@ class FidelityCard {
         
         this.FIDELITY_CARD_API_URL = config.APP.FIDELITY_API_URL;
         this.FIDELITY_CARD_EDGE_URL = config.APP.EDGE_API_URL;
+
+        this.FIDELITY_CARD_API_EDGE_URL = `${config.APP.EDGE_API_URL}/fidelity-card-api`
+
         this.SUPA_ANON_KEY = config.APP.SUPABASE_ANON_KEY;
         this.MAX_FIDELITY_COUNT = 6;
         
@@ -13,6 +16,7 @@ class FidelityCard {
         this.cardId = document.getElementById('fc-card-id');
 
         this.has_max_count = false;
+        this.stamped_today = false;
 
     }
 
@@ -29,6 +33,7 @@ class FidelityCard {
         this.clientName.innerText = data.clientName;
         this.cardId.innerText = data.cardId;
         let clientFidelityCount = data.fidelityCount;
+        let lastStampAt = data.lastStampAt;
 
         this.checks.innerHTML = '';
 
@@ -50,6 +55,8 @@ class FidelityCard {
         //this.fcCard.classList.remove("fc-hidden-card")
         this.showCard();
 
+        this.stamped_today = this.#lastStampDateIsToday(lastStampAt)
+
         if (clientFidelityCount == this.MAX_FIDELITY_COUNT){
             this.has_max_count = true;
             //showSuccess("El servicio gratuito ya fue aplicado, muchas gracias!")
@@ -59,14 +66,48 @@ class FidelityCard {
         return [false, ""]
     }
 
-    async #fetchFidelityCardData(card_id){
-        var fidelity_data = await $.getJSON(`${this.FIDELITY_CARD_API_URL}?card_id=${card_id}`, function (data) { 
-            return data;
-        }).fail(function(jqXHR, textStatus, errorThrown) { 
-            return {error: textStatus}
-        });
+    #lastStampDateIsToday(last_stamp_datetime){
+        if(!last_stamp_datetime){
+            return false;
+        }
+        const last_stamp_at = new Date(last_stamp_datetime)
+        let now_date = new Date()
+        return now_date.getFullYear() === last_stamp_at.getFullYear() &&
+        now_date.getMonth() === last_stamp_at.getMonth() &&
+        now_date.getDay() === last_stamp_at.getDay();
+    }
 
-        return fidelity_data;
+    async #fetchFidelityCardData(card_id){
+        //var fidelity_data = await $.getJSON(`${this.FIDELITY_CARD_API_URL}?card_id=${card_id}`, function (data) { 
+        //    return data;
+        //}).fail(function(jqXHR, textStatus, errorThrown) { 
+        //    return {error: textStatus}
+        //});
+
+        const getFidelityCardEndpoint = `${this.FIDELITY_CARD_API_EDGE_URL}/v1/get-fidelity-card`
+
+        const req_data = {
+            card_id: card_id
+        }
+
+        try{ 
+            const response = await fetch(getFidelityCardEndpoint, {
+                method: "POST",
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.SUPA_ANON_KEY}`
+                },
+                body: JSON.stringify(req_data)
+            });
+
+            const response_data = await response.json();
+    
+            return response_data;
+
+        } catch (error){
+            return {error: `unhandled error: ${error.message}`}
+        }
     }
 
     hideCard(){
@@ -82,7 +123,7 @@ class FidelityCard {
     */
     async checkInFidelityCardWithToken(card_id, token, captcha){
         
-        const checkInFidelityCardWithTokenEndPoint = `${this.FIDELITY_CARD_EDGE_URL}/fidelity-card-api/checkin-with-token`
+        const checkInFidelityCardWithTokenEndPoint = `${this.FIDELITY_CARD_API_EDGE_URL}/v1/checkin-with-token`
 
         const req_data = {
             cardId: card_id,
@@ -116,7 +157,7 @@ class FidelityCard {
     */
     async searchFidelityCardWithToken(phone, token, captcha){
     
-        const searchFidelityCardWithTokenEndPoint = `${this.FIDELITY_CARD_EDGE_URL}/fidelity-card-api/search-with-token`
+        const searchFidelityCardWithTokenEndPoint = `${this.FIDELITY_CARD_API_EDGE_URL}/v1/search-with-token`
 
         const req_data = {
             phone: phone,
@@ -150,7 +191,7 @@ class FidelityCard {
     */
     async getTokenWithPIN(pin){
     
-        const tokenFidelityCardEndPoint = `${this.FIDELITY_CARD_EDGE_URL}/fidelity-card-api/token-with-pin`
+        const tokenFidelityCardEndPoint = `${this.FIDELITY_CARD_API_EDGE_URL}/token-with-pin`
 
         const req_data = {
             pin: pin
@@ -182,7 +223,7 @@ class FidelityCard {
     async checkInFidelityCard(card_id){
        const loginstorage = new LoginStorage();
 
-       const checkInFidelityCardEndPoint = `${this.FIDELITY_CARD_EDGE_URL}/mark-fidelity-card`
+       const checkInFidelityCardEndPoint = `${this.FIDELITY_CARD_API_EDGE_URL}/v1/check-in-fidelity-card`
 
         const req_data = {
             cardId: card_id,
@@ -218,17 +259,20 @@ class FidelityCard {
     /*
         Execute Edge Function to create Fidelity Card
     */
-    async createFidelityCard(clientName, clientPhone){
+    async createFidelityCard(firstName, lastName, phone, phoneCountryCode, checkInCount){
         const loginstorage = new LoginStorage();
     
-        const createFidelityCardEndPoint = `${this.FIDELITY_CARD_EDGE_URL}/create-fidelity-card`
+        const createFidelityCardEndPoint = `${this.FIDELITY_CARD_API_EDGE_URL}/v1/create-fidelity-card`
     
+        let clientPhone = `${phoneCountryCode}${phone}`;
+
         const req_data = {
-            client_name: clientName,
+            client_name: firstName,
+            client_lastname: lastName,
             client_phone_number: clientPhone,
-            fidelity_count: "1",
+            fidelity_count: checkInCount,
             access_token: loginstorage.getStoreAccessToken()
-            }
+        }
     
             try{ 
                 const response = await fetch(createFidelityCardEndPoint, {
@@ -258,7 +302,7 @@ class FidelityCard {
     async #fetchFidelityCardsBySearchCriteria(search_criteria){
         const loginstorage = new LoginStorage();
 
-        const searchFidelityCardEndPoint = `${this.FIDELITY_CARD_EDGE_URL}/search-fidelity-card`
+        const searchFidelityCardEndPoint = `${this.FIDELITY_CARD_API_EDGE_URL}/v1/search-fidelity-card`
 
         const req_data = {
             search_criteria: search_criteria,

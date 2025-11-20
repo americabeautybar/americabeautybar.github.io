@@ -55,6 +55,14 @@
         width: 230px;
       }
 
+      .whats-icon-pink{
+        color:white;
+      }
+
+      .bigger-btn:hover .whats-icon-pink {
+        color: #fa5bdd;
+      }
+
     </style>
 
      <!-- Supabase -->
@@ -129,7 +137,9 @@
 
       <div style="display: flex; flex-direction: column;">
         <div style="justify-content: center; text-align: center; margin-bottom: 3rem;">
-          <button type="button" class="btn btn-primary btn-lg bigger-btn" disabled>Crear Tarjeta</button>
+          <a href="https://api.whatsapp.com/send/?phone=526562500321&text=Hola%2C%20quisiera%20mi%20tarjeta%20de%20fidelidad!&type=phone_number&app_absent=0" target="_blank">
+            <button type="button" class="btn btn-primary btn-lg bigger-btn">Quiero Mi Tarjeta&nbsp;<span class="icon icon-whatsapp whats-icon-pink"></span></button>
+          </a>
         </div>
 
         <div style="justify-content: center; text-align: center;">
